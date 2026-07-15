@@ -10,20 +10,11 @@ import androidx.health.connect.client.records.MenstruationFlowRecord
 import androidx.health.connect.client.records.Record
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
+import com.cyclewatch.shared.CyclePhase
 import java.time.Clock
 import java.time.LocalDate
 import java.time.ZonedDateTime
 import kotlin.reflect.KClass
-
-/** The cycle phase inferred from recent Health Connect symptom data. */
-enum class CyclePhase {
-    PHASE_MENSTRUAL,
-    PHASE_FERTILE,
-    PHASE_LUTEAL,
-
-    /** Not enough data in the lookback window to match any rule. */
-    PHASE_UNKNOWN,
-}
 
 /**
  * Reads cycle-related symptom records from Health Connect and applies a simple

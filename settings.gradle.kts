@@ -22,3 +22,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "CycleWatchApp"
 include(":app")
+include(":shared")
+include(":wear")

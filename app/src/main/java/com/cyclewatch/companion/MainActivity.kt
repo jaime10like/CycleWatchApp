@@ -21,8 +21,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.health.connect.client.HealthConnectClient
 import androidx.lifecycle.lifecycleScope
-import com.cyclewatch.companion.health.CyclePhase
 import com.cyclewatch.companion.health.SymptomAnalyzer
+import com.cyclewatch.companion.sync.PhaseSyncService
+import com.cyclewatch.shared.CyclePhase
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -73,9 +74,10 @@ class MainActivity : ComponentActivity() {
                 return@launch
             }
             status = "Analyzing the last 14 days…"
-            phase = analyzer.determineCurrentPhase()
+            val result = analyzer.determineCurrentPhase()
+            phase = result
             status = ""
-            // Next step: sync `phase` to the Wear OS app via the Data Layer API.
+            PhaseSyncService.start(this@MainActivity, result)
         }
     }
 }

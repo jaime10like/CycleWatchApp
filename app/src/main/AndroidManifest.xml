@@ -26,6 +26,11 @@
             </intent-filter>
         </activity>
 
+        <!-- One-shot sync of the analyzed phase to the watch via the Data Layer. -->
+        <service
+            android:name=".sync.PhaseSyncService"
+            android:exported="false" />
+
         <!-- Shown when the user taps the privacy-policy link in the
              Health Connect permission dialog (Android 13 and below). -->
         <activity

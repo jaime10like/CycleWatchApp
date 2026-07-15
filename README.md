@@ -1,8 +1,31 @@
 # CycleWatchApp
 
 Android companion app for Wear OS that reads cycle-related symptoms from
-[Health Connect](https://developer.android.com/health-and-fitness/guides/health-connect)
-and estimates the user's current cycle phase.
+[Health Connect](https://developer.android.com/health-and-fitness/guides/health-connect),
+estimates the user's current cycle phase, and shows it as a watch face
+complication.
+
+## Modules
+
+| Module | What it is |
+| --- | --- |
+| `:app` | Phone app: Health Connect analysis (`SymptomAnalyzer`), Compose UI, and `PhaseSyncService`, which pushes the phase to the watch over the Data Layer |
+| `:wear` | Watch app: `PhaseListenerService` receives the phase, `CyclePhaseComplicationService` serves it as a `RANGED_VALUE` complication (1–3) |
+| `:shared` | `CyclePhase` enum (with wire IDs) and `PhaseSyncContract` (Data Layer path/keys) used by both apps |
+
+## Phone → watch sync
+
+1. After each analysis, `PhaseSyncService` writes a Data Layer item at
+   `/cycle-phase` containing `phase_id` (0 unknown, 1 menstrual, 2 fertile,
+   3 luteal) and an `updated_at` timestamp (so identical phases still sync).
+2. On the watch, `PhaseListenerService` stores the received ID and calls
+   `ComplicationDataSourceUpdateRequester.requestUpdateAll()`.
+3. `CyclePhaseComplicationService` renders it as a ranged value from 1 to 3
+   with a text label; an unknown phase renders as "no data".
+
+Both apps must be installed with the **same applicationId and signing key**
+(`com.cyclewatch.companion`) or the Data Layer will not deliver between them —
+the `:wear` module is already configured this way.
 
 ## SymptomAnalyzer
 
