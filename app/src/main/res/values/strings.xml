@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CycleWatch</string>
+    <string name="permissions_rationale_title">How CycleWatch uses your health data</string>
+    <string name="permissions_rationale_body">CycleWatch reads your basal body
+        temperature, cervical mucus, and menstruation records from Health Connect
+        to estimate your current cycle phase and show it on your watch. Your data
+        is processed on this device only and is never uploaded or shared.
+        CycleWatch is not a medical or contraceptive tool.</string>
+</resources>
